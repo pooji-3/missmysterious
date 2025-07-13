@@ -32,7 +32,7 @@
       margin-top: 30px;
     }
     .age-line {
-      font-size: 1.3rem; /* Keep increased size for emphasis */
+      font-size: 1.3rem; /* Increased size for emphasis */
       margin-top: 40px;
       font-style: italic;
       color: #000000; /* Black color */
@@ -43,6 +43,9 @@
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
+    }
+    audio {
+      display: none; /* Hide audio controls for background music */
     }
   </style>
 </head>
@@ -58,6 +61,11 @@
   </div>
 
   <p class="age-line" id="ageLine">Calculating age...</p>
+
+  <audio id="backgroundMusic" autoplay loop muted>
+    <source src="background_music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     function updateAgeLine() {
@@ -78,6 +86,17 @@
     document.addEventListener("DOMContentLoaded", () => {
       updateAgeLine();
       setInterval(updateAgeLine, 1000);
+
+      // Enable audio on user interaction to comply with browser autoplay policies
+      const audio = document.getElementById("backgroundMusic");
+      document.body.addEventListener("click", () => {
+        if (audio.muted) {
+          audio.muted = false;
+          audio.play().catch((error) => {
+            console.log("Autoplay prevented:", error);
+          });
+        }
+      }, { once: true }); // Run only once
     });
   </script>
 </body>
