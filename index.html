@@ -1,58 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday</title>
-  <style>
-    body { margin: 0; background: white; font-family: Arial, sans-serif; color: black; text-align: center; padding: 20px; }
-    h1 { font-size: 2rem; margin-top: 20px; }
-    h2 { font-size: 1.5rem; margin-bottom: 30px; }
-    .photo { width:100%; max-width:500px; margin:20px auto; display:block; border-radius:12px; }
-    .message { font-size: 1.2rem; line-height: 1.6; margin-top:30px; }
-    #ageLine { font-size:1.1rem; margin-top:40px; font-style:italic; color:#333; }
-  </style>
-</head>
-<body>
-
-  <h1>Happy Birthday</h1>
-  <h2>Miss Mysterious</h2>
-
-  <img src="photo.jpg" alt="Birthday" class="photo" />
-
-  <div class="message">
-    <p>I am your quiet admirer, always cheering for you in silence.</p>
-    <p>And I’ll admire you — endlessly, forever, truly.</p>
-  </div>
-
-  <p id="ageLine">Calculating age…</p>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      function updateAge() {
-        const birth = new Date(2007, 6, 20);
-        const now = new Date();
-        const diff = now - birth;
-
-        if (isNaN(diff)) {
-          document.getElementById("ageLine").textContent = "Error calculating age";
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff; /* White background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            text-align: center; /* Center text within the body */
+            padding: 20px; /* Add some padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
 
-        const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
-        const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const seconds = now.getSeconds().toString().padStart(2, '0');
+        h1, h2, p {
+            color: #333; /* Darker text for readability */
+            margin: 10px 0; /* Space between text elements */
+        }
 
-        const text = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
-        document.getElementById("ageLine").textContent = text;
-      }
+        img {
+            max-width: 100%; /* Make image responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below image */
+            margin: 20px auto; /* Center image with margin above and below */
+            border-radius: 8px; /* Slightly rounded corners for the image */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
 
-      updateAge(); // run immediately
-      setInterval(updateAge, 1000); // update every second
-    });
-  </script>
+        .age-counter {
+            margin-top: 30px; /* Space above the counter */
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Birthday</h1>
+    <h2>Miss Mysterious</h2>
 
+    <img src="photo.jpg" alt="A beautiful birthday image">
+
+    <p>I am your quiet admirer, always cheering for you in silence.</p>
+    <p>And I’ll admire you — endlessly, forever, truly.</p>
+
+    <div class="age-counter" id="ageCounter"></div>
+
+    <script>
+        // Set the birthdate: July 20, 2007 at midnight
+        const birthDate = new Date('2007-07-20T00:00:00'); 
+
+        function updateAge() {
+            const now = new Date();
+            
+            let years = now.getFullYear() - birthDate.getFullYear();
+
+            // Adjust years if the birthday hasn't happened yet this calendar year
+            const monthDiff = now.getMonth() - birthDate.getMonth();
+            const dayDiff = now.getDate() - birthDate.getDate();
+            const hourDiff = now.getHours() - birthDate.getHours();
+            const minuteDiff = now.getMinutes() - birthDate.getMinutes();
+            const secondDiff = now.getSeconds() - birthDate.getSeconds();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) || 
+                (monthDiff === 0 && dayDiff === 0 && hourDiff < 0) ||
+                (monthDiff === 0 && dayDiff === 0 && hourDiff === 0 && minuteDiff < 0) ||
+                (monthDiff === 0 && dayDiff === 0 && hourDiff === 0 && minuteDiff === 0 && secondDiff < 0)) {
+                years--;
+            }
+
+            // Calculate the exact date of the last birthday anniversary
+            let lastBirthdayThisYear = new Date(birthDate.getFullYear() + years, 
+                                                birthDate.getMonth(), 
+                                                birthDate.getDate(), 
+                                                birthDate.getHours(), 
+                                                birthDate.getMinutes(), 
+                                                birthDate.getSeconds());
+
+            // Calculate milliseconds elapsed since that last birthday anniversary
+            let elapsedTime = now - lastBirthdayThisYear;
+
+            // Define millisecond constants for easier calculation
+            const msInSecond = 1000;
+            const msInMinute = msInSecond * 60;
+            const msInHour = msInMinute * 60;
+            const msInDay = msInHour * 24;
+
+            // Calculate remaining units
+            const days = Math.floor(elapsedTime / msInDay);
+            elapsedTime %= msInDay; // Get remainder after accounting for days
+
+            const hours = Math.floor(elapsedTime / msInHour);
+            elapsedTime %= msInHour; // Get remainder after accounting for hours
+
+            const minutes = Math.floor(elapsedTime / msInMinute);
+            elapsedTime %= msInMinute; // Get remainder after accounting for minutes
+
+            const seconds = Math.floor(elapsedTime / msInSecond);
+
+            // Get the HTML element where the age will be displayed
+            const ageCounterElement = document.getElementById('ageCounter');
+
+            // Update the text content of the element
+            ageCounterElement.innerHTML = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
+        }
+
+        // Call the function once immediately to display the age as soon as the page loads
+        updateAge();
+
+        // Update the age every second (1000 milliseconds)
+        setInterval(updateAge, 1000);
+    </script>
 </body>
 </html>
