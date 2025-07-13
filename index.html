@@ -28,20 +28,30 @@
   <p id="ageLine">Calculating age…</p>
 
   <script>
-    function updateAge() {
-      const birth = new Date(2007, 6, 20);
-      const now = new Date();
-      const diff = now - birth;
-      if (isNaN(diff)) { document.getElementById("ageLine").textContent = "Error calculating age"; return; }
-      const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
-      const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-      const text = For ${years} years, ${days} days, ${now.getHours()} hours, ${now.getMinutes()} minutes, and ${now.getSeconds()} seconds... you've made this world brighter — and my heart fuller.;
-      document.getElementById("ageLine").textContent = text;
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+      function updateAge() {
+        const birth = new Date(2007, 6, 20);
+        const now = new Date();
+        const diff = now - birth;
 
-    // run immediately and every second
-    document.addEventListener("DOMContentLoaded", updateAge);
-    setInterval(updateAge, 1000);
+        if (isNaN(diff)) {
+          document.getElementById("ageLine").textContent = "Error calculating age";
+          return;
+        }
+
+        const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
+        const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+
+        const text = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
+        document.getElementById("ageLine").textContent = text;
+      }
+
+      updateAge(); // run immediately
+      setInterval(updateAge, 1000); // update every second
+    });
   </script>
 
 </body>
