@@ -68,17 +68,18 @@
   <p class="age-line" id="ageLine">Loading...</p>
 
   <script>
-    window.onload = function () {
-      function updateAgeLine() {
-        const birthDate = new Date("2007-07-20T00:00:00Z");
-        const now = new Date();
-        const ageInMs = now.getTime() - birthDate.getTime();
+    document.addEventListener("DOMContentLoaded", function () {
+      const birthDate = new Date("2007-07-20T00:00:00");
 
-        const years = Math.floor(ageInMs / (365.25 * 24 * 60 * 60 * 1000));
-        const days = Math.floor((ageInMs % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-        const hours = now.getUTCHours();
-        const minutes = now.getUTCMinutes();
-        const seconds = now.getUTCSeconds();
+      function updateAgeLine() {
+        const now = new Date();
+        const diffMs = now - birthDate;
+
+        const years = Math.floor(diffMs / (365.25 * 24 * 60 * 60 * 1000));
+        const days = Math.floor((diffMs % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
 
         const line = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
         document.getElementById("ageLine").textContent = line;
@@ -86,7 +87,7 @@
 
       updateAgeLine();
       setInterval(updateAgeLine, 1000);
-    };
+    });
   </script>
 
 </body>
