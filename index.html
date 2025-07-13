@@ -8,83 +8,75 @@
     body {
       margin: 0;
       background: white;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       color: black;
       text-align: center;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
     h1 {
       font-size: 2rem;
-      margin: 20px 0 10px;
-      font-weight: 600;
+      margin-top: 20px;
     }
 
-    .subtext {
+    h2 {
       font-size: 1.5rem;
-      font-weight: 400;
       margin-bottom: 30px;
     }
 
     .photo {
       width: 100%;
-      max-width: 600px;
-      height: auto;
+      max-width: 500px;
+      border-radius: 12px;
       margin: 20px auto;
       display: block;
-      border-radius: 12px;
     }
 
     .message {
       font-size: 1.2rem;
-      line-height: 1.8;
       margin-top: 30px;
+      line-height: 1.6;
     }
 
     .age-line {
       font-size: 1.1rem;
       margin-top: 40px;
-      padding-bottom: 20px;
       font-style: italic;
-      color: #444;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
   <h1>Happy Birthday</h1>
-  <div class="subtext">Miss Mysterious</div>
+  <h2>Miss Mysterious</h2>
 
-  <img src="photo.jpg" alt="Birthday Image" class="photo" />
+  <img src="photo.jpg" alt="Birthday" class="photo" />
 
   <div class="message">
     <p>I am your quiet admirer, always cheering for you in silence.</p>
     <p>And I’ll admire you — endlessly, forever, truly.</p>
   </div>
 
-  <p class="age-line" id="ageLine">Loading...</p>
+  <p class="age-line" id="ageLine"></p>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    function updateAgeLine() {
       const birthDate = new Date("2007-07-20T00:00:00");
+      const now = new Date();
+      const diff = now - birthDate;
 
-      function updateAgeLine() {
-        const now = new Date();
-        const diff = now - birthDate;
+      const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
+      const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
-        const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
-        const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
+      const text = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
+      document.getElementById("ageLine").textContent = text;
+    }
 
-        const line = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
-        document.getElementById("ageLine").textContent = line;
-      }
-
+    document.addEventListener("DOMContentLoaded", () => {
       updateAgeLine();
       setInterval(updateAgeLine, 1000);
     });
