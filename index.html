@@ -11,7 +11,8 @@
       color: black;
       text-align: center;
       padding: 20px;
-      font-weight: bold; /* Make all text bold */
+      font-weight: bold; /* All text bold */
+      text-transform: uppercase; /* All text uppercase */
     }
     h1 {
       font-size: 2rem;
@@ -26,6 +27,14 @@
       border-radius: 12px;
       margin: 20px auto;
       display: block;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default subtle shadow */
+      transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+    }
+    img.clicked {
+      box-shadow: 0 0 20px 5px rgba(0, 0, 255, 0.5); /* Blue glow on click */
+    }
+    img:hover {
+      box-shadow: 0 vá0 15px 3px rgba(0, 0, 255, 0.3); /* Subtle glow on hover */
     }
     .message {
       font-size: 1.2rem;
@@ -36,8 +45,12 @@
       margin-top: 40px;
       font-style: italic;
       color: #000000; /* Black color */
-      text-transform: uppercase; /* Uppercase letters */
+      text-transform: uppercase; /* Already applied via body, kept for clarity */
       animation: pulse 2s infinite; /* Subtle pulsing animation */
+    }
+    .shadow-instruction {
+      font-size: 1.2rem;
+      margin-top: 30px;
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -45,7 +58,7 @@
       100% { transform: scale(1); }
     }
     audio {
-      display: none; /* Hide audio controls for background music */
+      display: none; /* Hide audio controls */
     }
   </style>
 </head>
@@ -53,7 +66,7 @@
   <h1>Happy Birthday</h1>
   <h2>Miss Mysterious</h2>
 
-  <img src="photo.jpg" alt="Birthday" />
+  <img src="photo.jpg" alt="Birthday" id="birthdayImage" />
 
   <div class="message">
     <p>I am your quiet admirer, always cheering for you in silence.</p>
@@ -61,6 +74,7 @@
   </div>
 
   <p class="age-line" id="ageLine">Calculating age...</p>
+  <p class="shadow-instruction">Click on girl's shadow</p>
 
   <audio id="backgroundMusic" autoplay loop muted>
     <source src="background_music.mp3" type="audio/mpeg">
@@ -87,7 +101,7 @@
       updateAgeLine();
       setInterval(updateAgeLine, 1000);
 
-      // Enable audio on user interaction to comply with browser autoplay policies
+      // Enable audio on user interaction
       const audio = document.getElementById("backgroundMusic");
       document.body.addEventListener("click", () => {
         if (audio.muted) {
@@ -96,7 +110,13 @@
             console.log("Autoplay prevented:", error);
           });
         }
-      }, { once: true }); // Run only once
+      }, { once: true });
+
+      // Toggle image shadow on click
+      const image = document.getElementById("birthdayImage");
+      image.addEventListener("click", () => {
+        image.classList.toggle("clicked");
+      });
     });
   </script>
 </body>
