@@ -5,45 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday</title>
   <style>
-    body {
-      margin: 0;
-      background: white;
-      font-family: Arial, sans-serif;
-      color: black;
-      text-align: center;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-top: 20px;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 30px;
-    }
-
-    .photo {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 12px;
-      margin: 20px auto;
-      display: block;
-    }
-
-    .message {
-      font-size: 1.2rem;
-      margin-top: 30px;
-      line-height: 1.6;
-    }
-
-    .age-line {
-      font-size: 1.1rem;
-      margin-top: 40px;
-      font-style: italic;
-      color: #333;
-    }
+    body { margin: 0; background: white; font-family: Arial, sans-serif; color: black; text-align: center; padding: 20px; }
+    h1 { font-size: 2rem; margin-top: 20px; }
+    h2 { font-size: 1.5rem; margin-bottom: 30px; }
+    .photo { width:100%; max-width:500px; margin:20px auto; display:block; border-radius:12px; }
+    .message { font-size: 1.2rem; line-height: 1.6; margin-top:30px; }
+    #ageLine { font-size:1.1rem; margin-top:40px; font-style:italic; color:#333; }
   </style>
 </head>
 <body>
@@ -58,28 +25,23 @@
     <p>And I’ll admire you — endlessly, forever, truly.</p>
   </div>
 
-  <p class="age-line" id="ageLine"></p>
+  <p id="ageLine">Calculating age…</p>
 
   <script>
-    function updateAgeLine() {
-      const birthDate = new Date("2007-07-20T00:00:00");
+    function updateAge() {
+      const birth = new Date(2007, 6, 20);
       const now = new Date();
-      const diff = now - birthDate;
-
+      const diff = now - birth;
+      if (isNaN(diff)) { document.getElementById("ageLine").textContent = "Error calculating age"; return; }
       const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
       const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-
-      const text = For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.;
+      const text = For ${years} years, ${days} days, ${now.getHours()} hours, ${now.getMinutes()} minutes, and ${now.getSeconds()} seconds... you've made this world brighter — and my heart fuller.;
       document.getElementById("ageLine").textContent = text;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      updateAgeLine();
-      setInterval(updateAgeLine, 1000);
-    });
+    // run immediately and every second
+    document.addEventListener("DOMContentLoaded", updateAge);
+    setInterval(updateAge, 1000);
   </script>
 
 </body>
