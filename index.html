@@ -37,7 +37,7 @@
       box-shadow: 0 0 15px 3px rgba(0, 0, 255, 0.3); /* Subtle glow on hover */
     }
     img.silhouette-image {
-      max-width: 100px; /* Small size for silhouette */
+      max-width: 80px; /* Slightly smaller size for silhouette */
       border-radius: 8px; /* Slightly smaller radius for smaller image */
       margin: 30px auto;
       display: block;
@@ -62,6 +62,12 @@
       text-transform: uppercase; /* Already applied via body, kept for clarity */
       animation: pulse 2s infinite; /* Subtle pulsing animation */
     }
+    .shadow-instruction {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      font-weight: normal; /* Override bold */
+      text-transform: none; /* Override uppercase */
+    }
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -83,6 +89,7 @@
   </div>
 
   <p class="age-line" id="ageLine">Calculating age...</p>
+  <p class="shadow-instruction">Tap on top silhouette &uarr;</p>
   <img src="silhouette.jpg" alt="Tap on Above Silhouette" id="silhouetteImage" class="silhouette-image" />
 
   <audio id="backgroundMusic" autoplay loop muted>
