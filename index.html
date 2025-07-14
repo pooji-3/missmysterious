@@ -22,7 +22,7 @@
       font-size: 1.5rem;
       margin-bottom: 30px;
     }
-    img {
+    img.main-image {
       max-width: 100%;
       border-radius: 12px;
       margin: 20px auto;
@@ -30,11 +30,25 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default subtle shadow */
       transition: box-shadow 0.3s ease; /* Smooth shadow transition */
     }
-    img.clicked {
+    img.main-image.clicked {
       box-shadow: 0 0 20px 5px rgba(0, 0, 255, 0.5); /* Blue glow on click */
     }
-    img:hover {
-      box-shadow: 0 vá0 15px 3px rgba(0, 0, 255, 0.3); /* Subtle glow on hover */
+    img.main-image:hover {
+      box-shadow: 0 0 15px 3px rgba(0, 0, 255, 0.3); /* Subtle glow on hover */
+    }
+    img.silhouette-image {
+      max-width: 100px; /* Small size for silhouette */
+      border-radius: 8px; /* Slightly smaller radius for smaller image */
+      margin: 30px auto;
+      display: block;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default subtle shadow */
+      transition: box-shadow 0.3s ease;
+    }
+    img.silhouette-image.clicked {
+      box-shadow: 0 0 15px 3px rgba(0, 0, 255, 0.5); /* Slightly smaller glow for small image */
+    }
+    img.silhouette-image:hover {
+      box-shadow: 0 0 10px 2px rgba(0, 0, 255, 0.3); /* Subtle glow on hover */
     }
     .message {
       font-size: 1.2rem;
@@ -47,10 +61,6 @@
       color: #000000; /* Black color */
       text-transform: uppercase; /* Already applied via body, kept for clarity */
       animation: pulse 2s infinite; /* Subtle pulsing animation */
-    }
-    .shadow-instruction {
-      font-size: 1.2rem;
-      margin-top: 30px;
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -66,15 +76,14 @@
   <h1>Happy Birthday</h1>
   <h2>Miss Mysterious</h2>
 
-  <img src="photo.jpg" alt="Birthday" id="birthdayImage" />
+  <img src="photo.jpg" alt="Birthday" id="birthdayImage" class="main-image" />
 
   <div class="message">
-    <p>I am your quiet admirer, always cheering for you in silence.</p>
-    <p>And I’ll admire you — endlessly, forever, truly.</p>
+    <p>Today may be your birthday ..but every moment you exist feels like time itself paused - just to admire you,holding its breath !!</p>
   </div>
 
   <p class="age-line" id="ageLine">Calculating age...</p>
-  <p class="shadow-instruction">Click on girl's shadow</p>
+  <img src="silhouette.jpg" alt="Tap on Above Silhouette" id="silhouetteImage" class="silhouette-image" />
 
   <audio id="backgroundMusic" autoplay loop muted>
     <source src="background_music.mp3" type="audio/mpeg">
@@ -112,10 +121,16 @@
         }
       }, { once: true });
 
-      // Toggle image shadow on click
-      const image = document.getElementById("birthdayImage");
-      image.addEventListener("click", () => {
-        image.classList.toggle("clicked");
+      // Toggle main image shadow on click
+      const mainImage = document.getElementById("birthdayImage");
+      mainImage.addEventListener("click", () => {
+        mainImage.classList.toggle("clicked");
+      });
+
+      // Toggle silhouette image shadow on click
+      const silhouetteImage = document.getElementById("silhouetteImage");
+      silhouetteImage.addEventListener("click", () => {
+        silhouetteImage.classList.toggle("clicked");
       });
     });
   </script>
