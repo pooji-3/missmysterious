@@ -89,7 +89,7 @@
   </div>
 
   <p class="age-line" id="ageLine">Calculating age...</p>
-  <p class="shadow-instruction">Tap on top silhouette &uarr;</p>
+  <p class="shadow-instruction">Tap on top silhouette ↑</p>
   <img src="silhouette.jpg" alt="Tap on Above Silhouette" id="silhouetteImage" class="silhouette-image" />
 
   <audio id="backgroundMusic" autoplay loop muted>
@@ -103,13 +103,24 @@
       const now = new Date();
       const diff = now - birthDate;
 
-      const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
-      const days = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+      // Calculate total days first to account for leap years
+      const totalDays = Math.floor(diff / (24 * 60 * 60 * 1000));
+      // Calculate years by comparing year difference and adjusting for incomplete year
+      const years = now.getFullYear() - birthDate.getFullYear();
+      const isBeforeBirthday = now.getMonth() < birthDate.getMonth() || 
+                              (now.getMonth() === birthDate.getMonth() && now.getDate() < birthDate.getDate());
+      const adjustedYears = isBeforeBirthday ? years - 1 : years;
+      
+      // Calculate remaining days after years
+      const tempDate = new Date(birthDate);
+      tempDate.setFullYear(tempDate.getFullYear() + adjustedYears);
+      const remainingDays = Math.floor((now - tempDate) / (24 * 60 * 60 * 1000));
+
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
       const seconds = now.getSeconds().toString().padStart(2, '0');
 
-      const text = `For ${years} years, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.`;
+      const text = `For ${adjustedYears} years, ${remainingDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds... you've made this world brighter — and my heart fuller.`;
       document.getElementById("ageLine").textContent = text;
     }
 
